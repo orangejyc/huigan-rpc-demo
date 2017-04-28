@@ -1,0 +1,4 @@
+rootProject.name = 'rpc-demo'
+include 'rpc-demo-api'
+include 'rpc-demo-bootstrap'
+
