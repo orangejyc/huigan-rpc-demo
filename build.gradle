@@ -3,12 +3,84 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
+sourceCompatibility = 1.5
 
 repositories {
     mavenCentral()
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    //compile group: 'com.euond', name: 'spring-boot-starter-dubbox', version: '3.0.1-SNAPSHOT'
+}
+
+
+allprojects {
+
+    sourceCompatibility = 1.8
+    apply plugin: 'maven'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'jacoco'
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                repository(url: "http://60.205.184.158:8081/nexus/content/repositories/snapshots/") {
+                    authentication(userName: "admin", password: "admin123")
+                }
+                /* 发布前禁止更新releases版本
+                repository(url: "http://60.205.184.158:8081/nexus/content/repositories/releases/") {
+                    authentication(userName: "admin", password: "admin123")
+                }
+                */
+
+                pom.project {
+                    name project.name
+                    packaging 'jar'
+                    description 'service demo'
+                    url 'http://www.huiguan.com'
+
+                    scm {
+                        url ''
+                        connection ''
+                        developerConnection ''
+                    }
+
+                    licenses {
+                        license {
+                            name 'No License'
+                            url 'http://www.huiguan.com'
+                            distribution 'repo'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'juyongcheng'
+                            name 'Yongcheng Ju'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from 'build/docs/javadoc'
+    }
+
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+
+    artifacts {
+        archives jar
+        archives javadocJar
+        archives sourcesJar
+    }
 }
