@@ -5,13 +5,18 @@
 
 package com.huiguan.rpc.api.entity;
 
+import java.io.Serializable;
+
 /**
  * TODO desc
  *
  * @author juyongcheng
  * @since $$Revision:1.0.0, $$Date: 2017/5/2 下午7:43 $$
  */
-public class RoleDTO {
+public class RoleDTO  implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
     private Long id;
 
     public Long getId(){

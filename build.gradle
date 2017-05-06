@@ -5,10 +5,7 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.5
 
-repositories {
-    mavenCentral()
-    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-}
+
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
@@ -24,6 +21,13 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'eclipse'
     apply plugin: 'jacoco'
+
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url "http://60.205.184.158:8081/nexus/content/groups/public/" }
+        mavenCentral()
+    }
 
     uploadArchives {
         repositories {
